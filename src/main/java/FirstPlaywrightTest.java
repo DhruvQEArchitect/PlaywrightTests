@@ -23,13 +23,13 @@ public class FirstPlaywrightTest {
              * To locate elements on the webpage
              */
             Locator firstName = page.locator("//input[@name='firstName']");
-
+            Locator countryOptions = page.locator("//select[@name='country']");
             /**
              * To send data in input fields or to type data in search boxes or input or textboxes use fill method
              */
             firstName.fill("Test user");
-            if (page.locator("//select[@name='country']").isEnabled()) {
-                page.locator("//select[@name='country']").selectOption("ALGERIA");
+            if (countryOptions.isEnabled()) {
+                countryOptions.selectOption("ALGERIA");
             }
             page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("test.png")));
             PlaywrightAssertions.assertThat(page).hasTitle(page.title());
