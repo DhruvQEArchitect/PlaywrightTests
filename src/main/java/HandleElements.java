@@ -12,8 +12,13 @@ public class HandleElements {
             Page page = context.newPage();
             page.navigate("https://www.orangehrm.com/en/pricing");
 
+            //handling single elements
             Locator fullName = page.locator("//input[@name='FullName']");
             fullName.fill("testuser");
+
+            //getting text from an element
+            Locator pricingText = page.locator("//div[@class='pricing-section']//h4");
+            System.out.println(pricingText.textContent());
 
             Locator noOfEmployees = page.locator("//select[@name='NoOfEmployees']");
             noOfEmployees.selectOption("0 - 10");
