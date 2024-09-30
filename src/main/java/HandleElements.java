@@ -1,6 +1,7 @@
 import com.microsoft.playwright.*;
 
 import java.nio.file.Paths;
+import java.util.List;
 
 public class HandleElements {
 
@@ -20,6 +21,14 @@ public class HandleElements {
             for (int i = 0; i < noOfEmployees.count(); i++) {
                 System.out.println(noOfEmployees.nth(i).textContent());
             }
+
+            //below allTextContents method return a list of String
+            List<String> anotherWay = noOfEmployees.allTextContents();
+            for (String str : anotherWay)
+                System.out.println(str);
+
+            anotherWay.forEach(System.out::println);
+
             page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("emp.png")));
         }
     }
