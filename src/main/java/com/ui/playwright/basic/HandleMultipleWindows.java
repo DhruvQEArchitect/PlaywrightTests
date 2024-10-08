@@ -23,6 +23,17 @@ public class HandleMultipleWindows {
             newWindow.close();
             System.out.println("Parent window: " + page.title());
             page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("pop.png")));
+
+            /**
+             * open a new tab and perform action on it
+             */
+            Page blankWindow = page.waitForPopup(() -> {
+                page.click("a[target='_blank']");
+            });
+            blankWindow.waitForLoadState();
+            blankWindow.navigate("https://www.google.com");
+            Thread.sleep(2000);
+            System.out.println(blankWindow.title());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
