@@ -1,6 +1,9 @@
+package com.ui.playwright.basic;
+
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 
+import java.awt.*;
 import java.nio.file.Paths;
 
 public class FirstPlaywrightTest {
@@ -11,12 +14,16 @@ public class FirstPlaywrightTest {
              * By default, the browser launches in headless mode in playwright
              */
             Browser browser = playwright.firefox().launch();
+            //to get screen resolution
+            Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            int width = dimension.width;
+            int height = dimension.height;
             /**
              * To run browser in headed mode
              */
 //            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
             Page page = browser.newPage();
-            page.setViewportSize(1920, 1080);
+            page.setViewportSize(width, height);
 //            page.navigate("https://demo.guru99.com/test/newtours/register.php");
             /**
              * To get the page title

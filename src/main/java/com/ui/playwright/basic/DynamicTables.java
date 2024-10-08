@@ -1,5 +1,6 @@
+package com.ui.playwright.basic;
+
 import com.microsoft.playwright.*;
-import com.microsoft.playwright.assertions.PlaywrightAssertions;
 
 import java.nio.file.Paths;
 

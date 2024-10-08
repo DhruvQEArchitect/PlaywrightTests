@@ -1,3 +1,5 @@
+package com.ui.playwright.basic;
+
 import com.microsoft.playwright.*;
 
 import java.nio.file.Paths;
