@@ -14,13 +14,15 @@ public class DownloadLogicPlaywright {
             BrowserContext browserContext = browser.newContext();
             Page page = browserContext.newPage();
             page.navigate("https://demoqa.com/upload-download");
-            page.locator("#uploadFile").setInputFiles(Paths.get("alerts.png"));
-//            page.waitForDownload(() -> {
-//
-//
-////                System.out.println(download.path());
-//            });
 
+            //below snippet to upload a file
+            page.locator("#uploadFile").setInputFiles(Paths.get("alerts.png"));
+
+            //below snippet to download a file
+            Download download = page.waitForDownload(() -> {
+                page.locator("#downloadButton").click();
+            });
+            download.saveAs(Paths.get("./data/", download.suggestedFilename()));
 
         }
     }
