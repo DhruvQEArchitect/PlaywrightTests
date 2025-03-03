@@ -1,4 +1,4 @@
-package com.stepdef;
+package stepdef;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
