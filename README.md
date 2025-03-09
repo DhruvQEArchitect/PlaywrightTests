@@ -1,4 +1,4 @@
-# PlaywrightTests
+🎭# PlaywrightTests🎭
 This repository describes usage of playwright tool ⚙️
 
 * Basic concepts of playwright ✅
