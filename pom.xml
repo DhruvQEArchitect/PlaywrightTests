@@ -39,7 +39,7 @@
         <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <cucumberVersion>7.21.1</cucumberVersion>
-        <playwrightVersion>1.49.0</playwrightVersion>
+        <playwrightVersion>1.50.0</playwrightVersion>
     </properties>
 
 </project>
