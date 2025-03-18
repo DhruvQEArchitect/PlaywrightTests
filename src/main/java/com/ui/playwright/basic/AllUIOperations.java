@@ -3,6 +3,7 @@ package com.ui.playwright.basic;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.MouseButton;
 
 import java.nio.file.Paths;
 
@@ -45,7 +46,20 @@ public class AllUIOperations {
         page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Web Tables")).isVisible();
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
         PlaywrightAssertions.assertThat(page.locator("#submit")).isVisible();
+        page.locator("//button[@class='close']/span[1]").click();
+        page.locator("//span[@class='select-wrap -pageSizeOptions']/select").selectOption("20 rows");
         captureScreenshot(page, "WebTable");
+
+        page.getByText("Buttons").click();
+        page.getByText("Double Click Me").dblclick();
+        PlaywrightAssertions.assertThat(page.getByText("You have done a double click")).isVisible();
+        page.getByText("Right Click Me").click(new Locator.ClickOptions().setButton(MouseButton.RIGHT));
+        PlaywrightAssertions.assertThat(page.getByText("You have done a right click")).isVisible();
+        page.locator("//*[text()='Click Me']").click();
+        PlaywrightAssertions.assertThat(page.getByText("You have done a dynamic click")).isVisible();
+        captureScreenshot(page, "Buttons");
+
+
         page.close();
         browserContext.close();
         browser.close();
