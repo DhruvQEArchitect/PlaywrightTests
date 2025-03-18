@@ -6,6 +6,8 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.MouseButton;
 
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class AllUIOperations {
     static Playwright playwright = Playwright.create();
@@ -59,6 +61,23 @@ public class AllUIOperations {
         PlaywrightAssertions.assertThat(page.getByText("You have done a dynamic click")).isVisible();
         captureScreenshot(page, "Buttons");
 
+
+        page.locator("//*[text()=\"Links\"]").click();
+        //find all links on the page
+        List<String> linkText = page.locator("//div[@id='linkWrapper']//following::a").allTextContents();
+        System.out.println(linkText);
+        captureScreenshot(page, "LinkText");
+
+//        page.getByText("Broken Links - Images").click();
+//        page.getByText("Click Here for Broken Link").click();
+//        PlaywrightAssertions.assertThat(page.getByText("This page returned a 500 status code.")).isVisible();
+//        captureScreenshot(page, "BrokenLinkTest");
+//        page.goBack();
+
+        page.getByText("Upload and Download").click();
+        page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Upload and Download")).isVisible();
+        page.locator("#uploadFile").setInputFiles(Paths.get("./data/sampleFile.jpeg"));
+        captureScreenshot(page, "ChooseFile");
 
         page.close();
         browserContext.close();
