@@ -5,23 +5,28 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.MouseButton;
 
+import java.awt.*;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class AllUIOperations {
     static Playwright playwright = Playwright.create();
-    static Page page, page2;
+    static Page page, newPage, newWin;
     static BrowserContext browserContext;
     static Browser browser;
+    static Dimension dimension;
+    static int height, width;
 
     public static void main(String[] args) {
-
+        dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        height = (int) dimension.getHeight();
+        width = (int) dimension.getWidth();
         BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions();
         launchOptions.setHeadless(false);
         browser = playwright.chromium().launch(launchOptions);
         browserContext = browser.newContext();
         page = browserContext.newPage();
+        page.setViewportSize(width, height);
         page.navigate("https://demoqa.com/elements");
         PlaywrightAssertions.assertThat(page.getByText("Please select an item from left to start practice.")).isVisible();
         System.out.println("Page title: " + page.title());
@@ -87,12 +92,34 @@ public class AllUIOperations {
         page.getByText("Alerts, Frame & Windows").click();
         page.getByText("Browser Windows").click();
 
-        page2 = browserContext.waitForPage(() -> {
+        newPage = browserContext.waitForPage(() -> {
             page.getByText("New Tab").click();
         });
-        PlaywrightAssertions.assertThat(page2.getByText("This is a sample page")).isVisible();
-        System.out.println(page2.title());
-        captureScreenshot(page2, "NewTab");
+        PlaywrightAssertions.assertThat(newPage.getByText("This is a sample page")).isVisible();
+        newPage.navigate("https://www.google.com");
+        captureScreenshot(newPage, "NewTab");
+        newPage.close();
+
+        newWin = page.waitForPopup(() -> {
+            page.locator("//*[text()='New Window']").click();
+        });
+        System.out.println(newWin.title());
+        newWin.navigate("https://www.google.com");
+        newWin.setViewportSize(width, height);
+        captureScreenshot(newWin, "NewWin");
+        newWin.close();
+
+        page.locator("//*[text()='Alerts']").click();
+
+        page.onDialog(dialog -> {
+            System.out.println(dialog.message());
+            dialog.accept();
+        });
+        page.locator("//button[@id='alertButton']").click();
+        captureScreenshot(page, "Dialog");
+
+        page.locator("//*[text()='Frames']").click();
+        captureScreenshot(page, "Frames");
 
         page.close();
         browserContext.close();
