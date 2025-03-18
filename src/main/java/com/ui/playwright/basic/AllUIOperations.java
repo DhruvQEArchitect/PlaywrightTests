@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 public class AllUIOperations {
     static Playwright playwright = Playwright.create();
-    static Page page;
+    static Page page, page2;
     static BrowserContext browserContext;
     static Browser browser;
 
@@ -77,7 +77,22 @@ public class AllUIOperations {
         page.getByText("Upload and Download").click();
         page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Upload and Download")).isVisible();
         page.locator("#uploadFile").setInputFiles(Paths.get("./data/sampleFile.jpeg"));
-        captureScreenshot(page, "ChooseFile");
+        page.locator("#downloadButton").click();
+        captureScreenshot(page, "Upload");
+        page.onDownload(download -> {
+            download.saveAs(Paths.get("./data/", download.suggestedFilename()));
+        });
+        captureScreenshot(page, "Download");
+
+        page.getByText("Alerts, Frame & Windows").click();
+        page.getByText("Browser Windows").click();
+
+        page2 = browserContext.waitForPage(() -> {
+            page.getByText("New Tab").click();
+        });
+        PlaywrightAssertions.assertThat(page2.getByText("This is a sample page")).isVisible();
+        System.out.println(page2.title());
+        captureScreenshot(page2, "NewTab");
 
         page.close();
         browserContext.close();
