@@ -119,7 +119,27 @@ public class AllUIOperations {
         captureScreenshot(page, "Dialog");
 
         page.locator("//*[text()='Frames']").click();
+        System.out.println(page.frameLocator("#frame1").locator("#sampleHeading").textContent());
         captureScreenshot(page, "Frames");
+
+        page.getByText("Modal Dialogs").click();
+        page.locator("#showSmallModal").click();
+        captureScreenshot(page, "ModalDialogs");
+        page.locator("#closeSmallModal").click();
+
+        page.getByText("Widgets").click();
+        page.getByText("Auto Complete").click();
+        page.locator("#autoCompleteMultipleInput").fill("re");
+        page.keyboard().press("Enter");
+        captureScreenshot(page, "AutoComplete");
+
+        page.getByText("Date Picker").click();
+        page.locator("#datePickerMonthYearInput").clear();
+        page.locator("#datePickerMonthYearInput").fill("03/10/2026");
+        page.locator("#dateAndTimePickerInput").clear();
+        page.locator("#dateAndTimePickerInput").fill("March 21, 2025 8:30 PM");
+        captureScreenshot(page, "DatePicker");
+
 
         page.close();
         browserContext.close();
