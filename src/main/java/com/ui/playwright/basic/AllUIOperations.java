@@ -140,6 +140,63 @@ public class AllUIOperations {
         page.locator("#dateAndTimePickerInput").fill("March 21, 2025 8:30 PM");
         captureScreenshot(page, "DatePicker");
 
+        /**
+         * move slider until it reaches a specific value
+         */
+        page.getByText("Slider").click();
+        int i = 0;
+        page.locator("//*[@class='range-slider range-slider--primary']").focus();
+        while (i < 2000) {
+            try {
+                page.keyboard().press("ArrowRight");
+                if (page.locator("//*[@class='range-slider range-slider--primary' and @value = \"86\"]").isVisible()) {
+                    break;
+                }
+            } catch (Exception ex) {
+                i++;
+            }
+
+        }
+        captureScreenshot(page, "Slider");
+
+        /**
+         * below snippet to handle progress bar
+         */
+        page.getByText("Progress Bar").click();
+        PlaywrightAssertions.assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Progress Bar"))).isVisible();
+        page.locator("#startStopButton").click();
+        while (i < 2000) {
+            try {
+                if (page.locator("//div[@role='progressbar' and @aria-valuenow=\"26\"]").isVisible()) {
+                    page.locator("#startStopButton").click();
+                    break;
+                }
+            } catch (Exception ex) {
+                i++;
+            }
+        }
+        captureScreenshot(page, "ProgressBar");
+
+        /**
+         * below snippet to handle tooltip
+         */
+        page.getByText("Tool Tips").click();
+        page.getByText("Hover me to see").hover();
+        PlaywrightAssertions.assertThat(page.getByRole(AriaRole.TOOLTIP, new Page.GetByRoleOptions().setName("You hovered over the Button"))).isVisible();
+        captureScreenshot(page, "ToolTip");
+
+        page.locator("//*[text()='Menu']").click();
+        page.getByText("Main Item 2").hover();
+
+        int count = page.locator("//*[text()='Main Item 2']/..//ul").count();
+
+        for (int j = 1; j <= count; j++) {
+            int liCount = page.locator("(//*[text()='Main Item 2']/..//ul)[" + j + "]/li").count();
+            for (int k = 1; k <= liCount; k++) {
+                System.out.println(page.locator("(//*[text()='Main Item 2']/..//ul)[" + j + "]/li[" + k + "]").allTextContents());
+            }
+        }
+        captureScreenshot(page, "Menu");
 
         page.close();
         browserContext.close();
