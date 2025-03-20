@@ -198,6 +198,27 @@ public class AllUIOperations {
         }
         captureScreenshot(page, "Menu");
 
+        /**
+         * below snippet to handle dropdowns
+         */
+        page.getByText("Select Menu").click();
+        page.locator("#cars").selectOption(new String[]{"Volvo", "Saab", "Audi"});
+        captureScreenshot(page, "SelectMenu");
+
+
+        page.getByText("Interactions").click();
+        page.getByText("Droppable").click();
+        page.locator("//*[text()='Drag me']").hover();
+        page.mouse().down();
+        page.locator("(//*[text()='Drop here'])[1]").hover();
+        page.mouse().up();
+        captureScreenshot(page, "Droppable");
+
+        page.getByText("Dragabble").click();
+        page.getByText("Axis Restricted").click();
+        page.locator("//*[text()='Only X']").dragTo(page.locator("//*[text()='Only Y']"));
+        captureScreenshot(page, "Dragabble");
+
         page.close();
         browserContext.close();
         browser.close();
