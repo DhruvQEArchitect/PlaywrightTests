@@ -216,6 +216,7 @@ public class AllUIOperations {
 
         page.getByText("Dragabble").click();
         page.getByText("Axis Restricted").click();
+        captureElementScreenshot(page.locator("//*[text()='Only X']"), "ElementScreenshot");
         page.locator("//*[text()='Only X']").dragTo(page.locator("//*[text()='Only Y']"));
         captureScreenshot(page, "Dragabble");
 
@@ -227,5 +228,9 @@ public class AllUIOperations {
 
     public static void captureScreenshot(Page page, String captureName) {
         page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("./Screenshots/" + captureName + ".png")));
+    }
+
+    public static void captureElementScreenshot(Locator locator, String captureName) {
+        locator.screenshot(new Locator.ScreenshotOptions().setPath(Paths.get("./Screenshots/" + captureName + ".png")));
     }
 }

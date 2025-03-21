@@ -18,6 +18,9 @@ public class PlaywrightAPIBasicCode {
     public static void main(String[] args) {
         getUser("https://reqres.in/api/users");
         createUser("https://reqres.in/api/users");
+        updateUser("https://reqres.in/api/users/2");
+        updateJob("https://reqres.in/api/users/2");
+        
     }
 
     public static void buildContext(String url) {
@@ -46,6 +49,27 @@ public class PlaywrightAPIBasicCode {
                 "}"));
         PlaywrightAssertions.assertThat(response).isOK();
         System.out.println("User created successfully");
+        System.out.println("Status Code: " + response.status());
+        System.out.println("Response Body: " + response.text());
+    }
+
+    public static void updateUser(String url) {
+        response = request.put(url, RequestOptions.create().setData("{\n" +
+                "    \"name\": \"morpheus\",\n" +
+                "    \"job\": \"zion\"\n" +
+                "}"));
+        PlaywrightAssertions.assertThat(response).isOK();
+        System.out.println("User updated successfully");
+        System.out.println("Status Code: " + response.status());
+        System.out.println("Response Body: " + response.text());
+    }
+
+    public static void updateJob(String url) {
+        response = request.patch(url, RequestOptions.create().setData("{\n" +
+                "    \"job\": \"test engineer\"\n" +
+                "}"));
+        PlaywrightAssertions.assertThat(response).isOK();
+        System.out.println("Job updated successfully");
         System.out.println("Status Code: " + response.status());
         System.out.println("Response Body: " + response.text());
     }
