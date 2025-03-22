@@ -37,7 +37,13 @@
             <artifactId>json</artifactId>
             <version>20250107</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testngVersion}</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
     <properties>
@@ -46,6 +52,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <cucumberVersion>7.21.1</cucumberVersion>
         <playwrightVersion>1.50.0</playwrightVersion>
+        <testngVersion>7.11.0</testngVersion>
     </properties>
 
 </project>
