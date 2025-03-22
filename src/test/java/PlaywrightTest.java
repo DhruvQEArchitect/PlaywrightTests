@@ -2,9 +2,11 @@ import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import pojo.ObjMapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +33,7 @@ public class PlaywrightTest {
     @Test
     public void executeAddressApi() {
         apiResponse = apiRequestContext.get("");
-        System.out.println(apiResponse.text());
+        PlaywrightAssertions.assertThat(apiResponse).isOK();
     }
 
     @AfterTest
