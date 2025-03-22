@@ -24,10 +24,14 @@ public class PlaywrightAssert {
         PlaywrightAssertions.assertThat(submitButton).hasText("Submit");
 
         PlaywrightAssertions.assertThat(submitButton).containsText("Submit");
-        
+
         PlaywrightAssertions.assertThat(submitButton).hasRole(AriaRole.BUTTON);
 
         PlaywrightAssertions.assertThat(currentAddress).hasAttribute("rows", "5");
+
+        page.navigate("https://demoqa.com/radio-button");
+        Locator impressiveRadio = page.locator("#impressiveRadio");
+        System.out.println(impressiveRadio.isChecked());
 
         browserContext.close();
         browser.close();
