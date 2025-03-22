@@ -6,7 +6,6 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pojo.ObjMapper;
 
 import java.util.HashMap;
 import java.util.Map;
