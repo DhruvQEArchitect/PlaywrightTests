@@ -3,7 +3,7 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(dryRun = true,
+@CucumberOptions(
         monochrome = true,
         features = "src/test/java/features/",
         tags = "@CucumberTest",
